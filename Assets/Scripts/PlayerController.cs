@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public float moveSpeed;
+    public Animator anim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,5 +19,11 @@ public class PlayerController : MonoBehaviour
         moveInput.y = Input.GetAxisRaw("Vertical");
         moveInput.Normalize(); // forcer la longueur du vecteur à être toujours de 1
         transform.position += moveInput * moveSpeed * Time.deltaTime;
+
+        if(moveInput != Vector3.zero){
+            anim.SetBool("isMoving", true);
+        }else{
+            anim.SetBool("isMoving", false);
+        }
     }
 }
