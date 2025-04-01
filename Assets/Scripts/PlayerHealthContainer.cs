@@ -1,38 +1,47 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealthController : MonoBehaviour
 {
-    public float currenthealth, maxhealth;
     public static PlayerHealthController instance;
+    
+    public float currentHealth, maxHealth;
+    public Slider healthSlider;
 
     private void Awake()
     {
         instance = this;
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
-        currenthealth = maxhealth;
+        currentHealth = maxHealth;
+
+        if (healthSlider != null) {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10f);
-        }
+        // if(Input.GetKeyDown(KeyCode.T))
+        // {
+        //     TakeDamage(10f);
+        // }
     }
 
     public void TakeDamage(float damageToTake)
     {
-        currenthealth -= damageToTake;
+        currentHealth -= damageToTake;
 
-        if(currenthealth <= 0)
+        if(currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
+
+           healthSlider.value = currentHealth;
     }
 }
