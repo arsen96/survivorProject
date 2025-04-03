@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class PlayerHealthController : MonoBehaviour
 {
     public static PlayerHealthController instance;
-    
-    public float currentHealth, maxHealth;
     public Slider healthSlider;
+
+    private float currentHealth, maxHealth;
 
     private void Awake()
     {
@@ -16,7 +16,12 @@ public class PlayerHealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        PlayerController parentPlayer = transform.parent.GetComponent<PlayerController>();
+        if (parentPlayer != null)
+        {
+            maxHealth = parentPlayer.maxHealth;
+            currentHealth = parentPlayer.currentHealth;
+        };
 
         if (healthSlider != null) {
             healthSlider.maxValue = maxHealth;
