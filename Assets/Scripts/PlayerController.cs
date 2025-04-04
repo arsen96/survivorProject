@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float currentHealth;
     public float maxHealth = 100f;
-    public float atkDamage = 5f;
+    public float atkDamage = 5;
     public float armor = 0f;
 
     public GameObject myPrefab;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         Vector3 moveInput = new Vector3(0f,0f,0f);
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
-        moveInput.Normalize(); // forcer la longueur du vecteur à être toujours de 1
+        moveInput.Normalize(); 
         transform.position += moveInput * moveSpeed * Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Q))

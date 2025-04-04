@@ -22,7 +22,7 @@ public class RotatingAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) && transform.childCount <= 6) || transform.childCount == 0) // Vérifie s'il n'a pas d'enfants et si la touche E est pressée
+        if ((Input.GetKeyDown(KeyCode.E) && transform.childCount <= 6) || transform.childCount == 0) // Vï¿½rifie s'il n'a pas d'enfants et si la touche E est pressï¿½e
         {
             AddNewSword();
         }
@@ -33,7 +33,7 @@ public class RotatingAttackController : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        int nbrOfSwords = transform.childCount + 1; // à changer avec juste les sword si plus d'enfants
+        int nbrOfSwords = transform.childCount + 1; // ï¿½ changer avec juste les sword si plus d'enfants
         float angleStep = 360f / nbrOfSwords;
 
         rotationSpeed += 20f;
@@ -52,7 +52,9 @@ public class RotatingAttackController : MonoBehaviour
 
             GameObject instance = Instantiate(sword, pos, rota, transform);
             instance.name = sword.name;
-            instance.GetComponent<SwordController>().swordDamage += 1;
         }
     }
+
+
+ 
 }

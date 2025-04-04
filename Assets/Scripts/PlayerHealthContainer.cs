@@ -7,6 +7,7 @@ public class PlayerHealthController : MonoBehaviour
     public Slider healthSlider;
 
     private float currentHealth, maxHealth;
+    private bool damaged = false;
 
     private void Awake()
     {
@@ -32,21 +33,27 @@ public class PlayerHealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(Input.GetKeyDown(KeyCode.T))
-        // {
-        //     TakeDamage(10f);
-        // }
+
     }
 
     public void TakeDamage(float damageToTake)
     {
         currentHealth -= damageToTake;
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
-
-           healthSlider.value = currentHealth;
+        else
+        {
+            if (healthSlider != null)
+            {
+                if (!healthSlider.gameObject.activeSelf)
+                {
+                    healthSlider.gameObject.SetActive(true);
+                }
+                healthSlider.value = currentHealth;
+            }
+        }
     }
 }

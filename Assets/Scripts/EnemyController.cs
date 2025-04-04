@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
     public Rigidbody2D theRB;
     public float moveSpeed;
     private Transform target;
@@ -13,7 +14,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = FindObjectOfType<PlayerController>().transform;
+        // target = FindObjectOfType<PlayerController>().transform;
+
+        target = PlayerHealthController.instance.transform;
     }
 
     // Update is called once per frame
@@ -36,7 +39,6 @@ public class EnemyController : MonoBehaviour
         {
             // Apply damage to player
             PlayerHealthController.instance.TakeDamage(damage);
-            // Reset hit counter
             hitCounter = hitCooldown;
         }
     }
