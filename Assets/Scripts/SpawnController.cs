@@ -8,6 +8,7 @@ public class SpawnController : MonoBehaviour
     private float timeToSpawn;
 
     public Transform minSpawn, maxSpawn;
+    public GameObject enemies;
 
     private Transform target;
     private float despawnDistance;
@@ -32,7 +33,7 @@ public class SpawnController : MonoBehaviour
         {
             spawnCounter = timeToSpawn;
             // Debug.Log("enemyyy " + enemyWrapperPrefab);
-            GameObject newEnemy = Instantiate(enemyWrapperPrefab, SpawnPoint(), transform.rotation);
+            GameObject newEnemy = Instantiate(enemyWrapperPrefab, SpawnPoint(), transform.rotation, enemies.transform);
             spawnedEnemies.Add(newEnemy);
         }
         transform.position = target.position;

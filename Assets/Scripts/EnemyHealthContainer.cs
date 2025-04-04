@@ -4,11 +4,12 @@ using UnityEngine.UI;
 public class EnemyHealthContainer : MonoBehaviour
 {
     public static EnemyHealthContainer instance;
+    public GameObject crystal;
     
     public float currentHealth, maxHealth;
     public Slider healthSlider;
 
-    private bool damaged = false;
+    private Vector3 currentPos;
 
     private void Awake()
     {
@@ -39,7 +40,11 @@ public class EnemyHealthContainer : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            currentPos = gameObject.transform.position;
+            Transform parent = transform.parent;
+            Destroy(gameObject);
+
+            GameObject instance = Instantiate(crystal, currentPos, Quaternion.identity, parent.GetChild(0).transform);
         }else{
              if (!healthSlider.gameObject.activeSelf)
              {

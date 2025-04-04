@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7fb466dd454388ba0258beeb17906c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crystal: {fileID: 348869454282857346, guid: 67f5e927d264fa249bc5b40a5569528c, type: 3}
   currentHealth: 0
   maxHealth: 10
   healthSlider: {fileID: 4208769989870587294}

@@ -17,11 +17,12 @@ public class PlayerHealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerController parentPlayer = transform.parent.GetComponent<PlayerController>();
-        if (parentPlayer != null)
+        PlayerController Player = GetComponent<PlayerController>();
+        if (Player != null)
         {
-            maxHealth = parentPlayer.maxHealth;
-            currentHealth = parentPlayer.currentHealth;
+            maxHealth = Player.maxHealth;
+            currentHealth = Player.currentHealth;
+            Debug.Log("maxHealth" + maxHealth);
         };
 
         if (healthSlider != null) {
