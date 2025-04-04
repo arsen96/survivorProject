@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealthController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class PlayerHealthController : MonoBehaviour
         {
             maxHealth = Player.maxHealth;
             currentHealth = Player.currentHealth;
-            Debug.Log("maxHealth" + maxHealth);
+            Debug.Log("currentHealth" + currentHealth);
         };
 
         if (healthSlider != null) {
@@ -40,10 +41,10 @@ public class PlayerHealthController : MonoBehaviour
     public void TakeDamage(float damageToTake)
     {
         currentHealth -= damageToTake;
-
         if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            Debug.Log("Mort " + currentHealth);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {

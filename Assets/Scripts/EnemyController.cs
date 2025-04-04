@@ -25,12 +25,23 @@ public class EnemyController : MonoBehaviour
         // Calculate velocity towards the target
         theRB.linearVelocity = (target.position - transform.position).normalized * moveSpeed;
 
+        // Adjust rotation based on player's position
+        if (target.position.x < transform.position.x)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
         // Manage hit cooldown
         if(hitCounter > 0)
         {
             hitCounter -= Time.deltaTime;
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

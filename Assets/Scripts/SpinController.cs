@@ -3,9 +3,10 @@ using UnityEngine;
 public class SpinController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float rotateSpeed = 2f;
+    // public float rotateSpeed = 2f;
 
-     private Transform target;
+    private Transform target;
+
 
     void Start()
     {
@@ -16,15 +17,21 @@ public class SpinController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0,0,rotateSpeed *  Time.deltaTime) ; 
+        // transform.Rotate(0,0,rotateSpeed *  Time.deltaTime) ; 
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Player")
         {
-            // FindObjectOfType<EnemyHealthContainer>().transform;
-           other.GetComponent<EnemyHealthContainer>().TakeDamage(5);
+            // Debug.Log("axpeeerr");
+            PlayerHealthController playerHealth = other.GetComponentInParent<PlayerHealthController>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(5);
+            }
+
+            Destroy(gameObject);
         }
     }
 }
