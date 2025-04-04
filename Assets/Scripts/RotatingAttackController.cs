@@ -6,6 +6,8 @@ public class RotatingAttackController : MonoBehaviour
     public GameObject sword;
 
     public float atkDamage;
+    private PlayerXpController secondParent;
+    private int lastLevel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,13 +18,25 @@ public class RotatingAttackController : MonoBehaviour
             {
                 atkDamage = parentPlayer.atkDamage;
             }
+
+            secondParent = transform.parent.GetComponent<PlayerXpController>();
+            if (secondParent != null)
+            {
+                lastLevel = secondParent.level;
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) && transform.childCount <= 6) || transform.childCount == 0) // V�rifie s'il n'a pas d'enfants et si la touche E est press�e
+        if (secondParent != null && secondParent.level > lastLevel && transform.childCount <= 6)
+        {
+            lastLevel = secondParent.level;
+            AddNewSword();
+        }
+
+        if (transform.childCount == 0)
         {
             AddNewSword();
         }
