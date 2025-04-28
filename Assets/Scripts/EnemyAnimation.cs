@@ -6,7 +6,6 @@ public class EnemyAnimation : MonoBehaviour
     public float speed;
     public float minSize, maxSize;
     private float activeSize;
-
     // Start is called before the first frame update
     void Start()
     {

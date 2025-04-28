@@ -10,6 +10,11 @@ public class EnemyController : MonoBehaviour
 
     public float hitCooldown = 1f;
     private float hitCounter;
+    public float pushDuration = .5F;
+    public float pushCounter;
+    [SerializeField] public bool enablePushback = true;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +27,23 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calculate velocity towards the target
+
+        if(pushCounter > 0)
+            {
+                pushCounter -= Time.deltaTime;
+                
+                if(moveSpeed > 0)
+                {
+                    moveSpeed = -moveSpeed * 2f;
+                }
+
+                if(pushCounter < 0){
+                    moveSpeed = Mathf.Abs(moveSpeed * .5f);
+                }
+            }
+
         theRB.linearVelocity = (target.position - transform.position).normalized * moveSpeed;
 
-        // Adjust rotation based on player's position
         if (target.position.x < transform.position.x)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -35,7 +53,6 @@ public class EnemyController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
-        // Manage hit cooldown
         if(hitCounter > 0)
         {
             hitCounter -= Time.deltaTime;

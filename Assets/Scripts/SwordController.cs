@@ -4,6 +4,7 @@ public class SwordController : MonoBehaviour
 {
     public float swordDamage = 3;
     public float currentDamage;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,11 +30,12 @@ public class SwordController : MonoBehaviour
 
         if (other.gameObject.tag == "Enemy")
         {
-            // FindObjectOfType<EnemyHealthContainer>().transform;
-           other.GetComponent<EnemyHealthContainer>().TakeDamage(currentDamage);
+            EnemyController enemyController = other.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                bool enablePushback = enemyController.enablePushback;
+                other.GetComponent<EnemyHealthContainer>().TakeDamage(currentDamage, enablePushback);
+            }
         }
     }
-
-
-
 }

@@ -10,6 +10,9 @@ public class EnemyHealthContainer : MonoBehaviour
     public Slider healthSlider;
 
     private Vector3 currentPos;
+    private EnemyController enemyController;
+
+    
 
     private void Awake()
     {
@@ -26,6 +29,8 @@ public class EnemyHealthContainer : MonoBehaviour
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
         }
+
+        enemyController = GetComponent<EnemyController>();
     }
 
     // Update is called once per frame
@@ -55,5 +60,16 @@ public class EnemyHealthContainer : MonoBehaviour
         }
 
         DamageServiceController.instance.MakeDamage(damageToTake, transform.position);
+    }
+
+
+    public void TakeDamage(float damageToTake, bool shouldKnockback)
+    {
+        TakeDamage(damageToTake);
+        
+        if(shouldKnockback == true && enemyController != null)
+        {
+            enemyController.pushCounter = enemyController.pushDuration;
+        }
     }
 }

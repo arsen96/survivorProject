@@ -17,7 +17,6 @@ public class SpawnController : MonoBehaviour
 
     public float durationToSpawn = 15f;
 
-    // renomme la variable plus cours c le temps d'apparition de boss apres le dernier enemy apparu  
     public float bossAppearTime = 3f;
     private float _bossAppearTime;
 
@@ -28,6 +27,12 @@ public class SpawnController : MonoBehaviour
     private bool isDestroying = false;
 
     private bool stopEnemiesComing = false;
+
+    public List<WaveInfo> waves;
+
+    private int currentWave;
+    private float waveCounter;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,31 +46,57 @@ public class SpawnController : MonoBehaviour
         despawnDistance = Vector3.Distance(transform.position, maxSpawn.position) + 2f;
 
         _durationToSpawn = durationToSpawn;
+        currentWave = -1;
+        // spawnCounter = waves[currentWave].timeBetweenSpawns;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // if(stopEnemiesComing == false){
+        //     spawnCounter -= Time.deltaTime;
+        //     if (spawnCounter < 0 && _durationToSpawn > 0)
+        //     {
+        //         spawnCounter = timeToSpawn;
+        //         // Debug.Log("enemyyy " + enemyWrapperPrefab);
+        //         GameObject newEnemy = Instantiate(enemyWrapperPrefab, SpawnPoint(), transform.rotation, enemies.transform);
+        //         spawnedEnemies.Add(newEnemy);
+        //     }else if(_durationToSpawn < 0){
+        //         _bossAppearTime -= Time.deltaTime;
+        //         // Debug.Log("_bossAppearTime " + _bossAppearTime);
+        //         //  Debug.Log("stopEnemiesComing " + stopEnemiesComing);
+        //         if(_bossAppearTime < 0){
+        //             GameObject newEnemy = Instantiate(bossWrapperPrefab, SpawnPoint(), transform.rotation,  enemies.transform);
+        //             spawnedEnemies.Add(newEnemy);
+        //             stopEnemiesComing = true;
+        //         }
+        //     }
+        //     _durationToSpawn -= Time.deltaTime;
+        // }
+
         if(stopEnemiesComing == false){
-            spawnCounter -= Time.deltaTime;
-            if (spawnCounter < 0 && _durationToSpawn > 0)
-            {
-                spawnCounter = timeToSpawn;
-                // Debug.Log("enemyyy " + enemyWrapperPrefab);
-                GameObject newEnemy = Instantiate(enemyWrapperPrefab, SpawnPoint(), transform.rotation, enemies.transform);
-                spawnedEnemies.Add(newEnemy);
-            }else if(_durationToSpawn < 0){
-                _bossAppearTime -= Time.deltaTime;
-                // Debug.Log("_bossAppearTime " + _bossAppearTime);
-                //  Debug.Log("stopEnemiesComing " + stopEnemiesComing);
-                if(_bossAppearTime < 0){
-                    GameObject newEnemy = Instantiate(bossWrapperPrefab, SpawnPoint(), transform.rotation,  enemies.transform);
-                    spawnedEnemies.Add(newEnemy);
-                    stopEnemiesComing = true;
+            if(currentWave < waves.Count){
+                waveCounter -= Time.deltaTime;
+
+                if(waveCounter <= 0){
+                    GoToNextWave();
                 }
+
+                if(spawnCounter <= 0)
+                    {
+                        spawnCounter = waves[currentWave].timeBetweenSpawns;
+                        GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SpawnPoint(), Quaternion.identity, enemies.transform);
+                        spawnedEnemies.Add(newEnemy);
+                    }
+
+
+
+                spawnCounter -= Time.deltaTime;
             }
-            _durationToSpawn -= Time.deltaTime;
         }
+
+   
+
         transform.position = target.position;
     }
 
@@ -137,7 +168,104 @@ public class SpawnController : MonoBehaviour
     //         yield return new WaitForSeconds(delay);
     //     }
     // }
+
+
+ 
+
+    public void GoToNextWave()
+    {
+        currentWave++;
+        
+        if(currentWave >= waves.Count)
+        {
+            currentWave = waves.Count - 1;
+        }
+        
+        waveCounter = waves[currentWave].waveLength;
+        spawnCounter = waves[currentWave].timeBetweenSpawns;
+    }
 }
 
 
 
+[System.Serializable]
+public class WaveInfo
+{
+    public GameObject enemyToSpawn;
+    public float waveLength = 10f;
+    public float timeBetweenSpawns = 1f;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // if(PlayerHealthController.instance.gameObject.activeSelf)
+        // {
+        //     if(currentWave < waves.Count)
+        //     {
+        //         waveCounter -= Time.deltaTime;
+        //         if(waveCounter <= 0)
+        //         {
+        //             GoToNextWave();
+        //         }
+                
+        //         spawnCounter -= Time.deltaTime;
+        //         if(spawnCounter <= 0)
+        //         {
+        //             spawnCounter = waves[currentWave].timeBetweenSpawns;
+                    
+        //             GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SelectSpawnPoint(), Quaternion.identity);
+                    
+        //             spawnedEnemies.Add(newEnemy);
+        //         }
+        //     }
+        // }
+
+
+
+// Cette classe servira de modèle pour toutes les armes du jeu
+// public class Weapon : MonoBehaviour
+// {
+//     public List<WeaponStats> stats; // stocker les données de chaque niveau d'arme
+//     public int weaponLevel;
+// }
+
+// [System.Serializable]
+// public class WeaponStats
+// {
+//     public float speed, damage, range, timeBetweenAttacks, amount, duration;
+// }
+
+// Toutes les armes partagent des fonctionnalités communes (statistiques, niveaux) sans avoir à réécrire ce code pour chaque arme
+
+
+// public void SetStats()
+// {
+//     damager.damageAmount = stats[weaponLevel].damage;  // 
+    
+//     transform.localScale = Vector3.one * stats[weaponLevel].range;
+    
+//     timeBetweenSpawn = stats[weaponLevel].timeBetweenAttacks;
+    
+//     damager.lifetime = stats[weaponLevel].duration;
+    
+//     spawnCounter = 0f;
+// }
