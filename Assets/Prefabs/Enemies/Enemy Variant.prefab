@@ -64,6 +64,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944852847159297222, guid: d0d3b6806b0fd27ef8e2986b2066d9c9, type: 3}
+      propertyPath: pushDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704662550660794253, guid: d0d3b6806b0fd27ef8e2986b2066d9c9, type: 3}
+      propertyPath: maxSize
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704662550660794253, guid: d0d3b6806b0fd27ef8e2986b2066d9c9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9057400084735605585, guid: d0d3b6806b0fd27ef8e2986b2066d9c9, type: 3}
+      propertyPath: maxHealth
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -427,4 +427,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc461a989428b891b44727e5b145cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 2
+  stats: []
+  weaponLevel: 0
+  statsUpdated: 0
+  icon: {fileID: 0}
+  holder: {fileID: 0}
+  fireBallToSpawn: {fileID: 0}
+  timeBetweenSpawn: 0
+  spinDamager: {fileID: 0}
+  secondParent: {fileID: 0}

@@ -4,6 +4,9 @@ using System.Collections;
 
 public class SpawnController : MonoBehaviour
 {
+
+    public static event System.Action<int> newLevel;
+    public GameObject ennemyHealthContainer;
     public GameObject enemyWrapperPrefab;
     public GameObject bossWrapperPrefab;
     public float spawnCounter;
@@ -27,16 +30,46 @@ public class SpawnController : MonoBehaviour
     private bool isDestroying = false;
 
     private bool stopEnemiesComing = false;
+    // [HideInInspector]
 
-    public List<WaveInfo> waves;
+    [System.Serializable]
+    public class WaveGroup
+    {
+        public WaveInfo[] waves;
+    }
+    [SerializeField]
+    private List<WaveGroup> waves = new List<WaveGroup>();
 
-    private int currentWave;
+    private int currentWave = 0;
+    private int levelWaveGroup = 0;
     private float waveCounter;
+    [HideInInspector]
+    public int nombreDeGroupes = 0;
+
+    private bool isBossHere = false;
+
+    private GameObject currentBoss;
+
+    public delegate void BossDeathHandler();
+    public static event BossDeathHandler OnBossDefeated;
 
 
+
+     private void HandleBossDeath()
+    {
+        DestroyEnemies();
+        if(waves[levelWaveGroup + 1] != null && waves[levelWaveGroup + 1].waves != null && waves[levelWaveGroup + 1].waves.Length > 0){
+            levelWaveGroup++;
+            Debug.Log("levelWaveGroup " + levelWaveGroup);
+            // Debug.Log("invoked: " + levelWaveGroup);
+            newLevel?.Invoke(levelWaveGroup);  
+            initLevel();
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+       EnemyHealthContainer.OnBossDeath += HandleBossDeath;
         timeToSpawn = spawnCounter;
 
         _bossAppearTime = bossAppearTime;
@@ -46,46 +79,40 @@ public class SpawnController : MonoBehaviour
         despawnDistance = Vector3.Distance(transform.position, maxSpawn.position) + 2f;
 
         _durationToSpawn = durationToSpawn;
-        currentWave = -1;
-        // spawnCounter = waves[currentWave].timeBetweenSpawns;
+        initLevel();
+
+    }
+
+     void OnDestroy()
+    {
+        EnemyHealthContainer.OnBossDeath -= HandleBossDeath;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if(stopEnemiesComing == false){
-        //     spawnCounter -= Time.deltaTime;
-        //     if (spawnCounter < 0 && _durationToSpawn > 0)
-        //     {
-        //         spawnCounter = timeToSpawn;
-        //         // Debug.Log("enemyyy " + enemyWrapperPrefab);
-        //         GameObject newEnemy = Instantiate(enemyWrapperPrefab, SpawnPoint(), transform.rotation, enemies.transform);
-        //         spawnedEnemies.Add(newEnemy);
-        //     }else if(_durationToSpawn < 0){
-        //         _bossAppearTime -= Time.deltaTime;
-        //         // Debug.Log("_bossAppearTime " + _bossAppearTime);
-        //         //  Debug.Log("stopEnemiesComing " + stopEnemiesComing);
-        //         if(_bossAppearTime < 0){
-        //             GameObject newEnemy = Instantiate(bossWrapperPrefab, SpawnPoint(), transform.rotation,  enemies.transform);
-        //             spawnedEnemies.Add(newEnemy);
-        //             stopEnemiesComing = true;
-        //         }
-        //     }
-        //     _durationToSpawn -= Time.deltaTime;
-        // }
 
-        if(stopEnemiesComing == false){
-            if(currentWave < waves.Count){
+        if(stopEnemiesComing == false ){
+            if(levelWaveGroup < waves.Count){
                 waveCounter -= Time.deltaTime;
 
                 if(waveCounter <= 0){
-                    GoToNextWave();
+                    GoToNextWave();         
                 }
 
-                if(spawnCounter <= 0)
+                if(spawnCounter <= 0 && stopEnemiesComing == false)
                     {
-                        spawnCounter = waves[currentWave].timeBetweenSpawns;
-                        GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SpawnPoint(), Quaternion.identity, enemies.transform);
+                        spawnCounter = waves[levelWaveGroup].waves[currentWave].timeBetweenSpawns;
+
+                        GameObject newEnemy = Instantiate(waves[levelWaveGroup].waves[currentWave].enemyToSpawn, SpawnPoint(), Quaternion.identity, enemies.transform);
+                        if(levelWaveGroup > 0){
+                            newEnemy.GetComponent<EnemyController>()._levelMoveSpeedMultiplier = levelWaveGroup * newEnemy.GetComponent<EnemyController>().levelMoveSpeedMultiplier;
+                            newEnemy.GetComponent<EnemyController>()._levelDamageMultiplier = levelWaveGroup * newEnemy.GetComponent<EnemyController>().levelDamageMultiplier;
+                        }
+                        if(newEnemy.gameObject.GetComponent<BossController>() != null){
+                            currentBoss = newEnemy;
+                        }
+                        
                         spawnedEnemies.Add(newEnemy);
                     }
 
@@ -95,32 +122,30 @@ public class SpawnController : MonoBehaviour
             }
         }
 
-   
 
         transform.position = target.position;
     }
 
     void FixedUpdate()
     {
-    //   DestroyEnemies();
     }
 
-    public void DestroyEnemies(bool checkDistance = true){
+    public void initLevel(){
+        isBossHere = false;
+        stopEnemiesComing = false;
+        // spawnedEnemies = new List<GameObject>();
+        currentWave = -1;
+        spawnCounter = waves[levelWaveGroup].waves[0].timeBetweenSpawns;
+    }
+
+    public void DestroyEnemies(){
 
         for (var i = spawnedEnemies.Count - 1; i >= 0; i--)
         {
-
-            if(checkDistance){
-                if (Vector3.Distance(transform.position, spawnedEnemies[i].transform.position) > despawnDistance){
-                        Destroy(spawnedEnemies[i]);
-                        spawnedEnemies.RemoveAt(i);
-               }
-            }else{
                 Destroy(spawnedEnemies[i]);
                 spawnedEnemies.RemoveAt(i);
-            }
-           
         }
+           
     }
 
     public Vector3 SpawnPoint()
@@ -155,34 +180,19 @@ public class SpawnController : MonoBehaviour
         return spawnPoint;
     }
 
-    // private IEnumerator DestroyEnemiesWithDelay()
-    // {
-    //     isDestroying = true;
-    //     float totalDespawnTime = durationToSpawn - _durationToSpawn;
-    //     float delay = totalDespawnTime / spawnedEnemies.Count;
-
-    //     for (var i = spawnedEnemies.Count - 1; i >= 0; i--)
-    //     {
-    //         Destroy(spawnedEnemies[i]);
-    //         spawnedEnemies.RemoveAt(i);
-    //         yield return new WaitForSeconds(delay);
-    //     }
-    // }
-
-
- 
 
     public void GoToNextWave()
     {
         currentWave++;
-        
-        if(currentWave >= waves.Count)
+        isBossHere = true;
+        if(currentWave >= waves[levelWaveGroup].waves.Length || currentWave >= waves[levelWaveGroup].waves.Length - 1)
         {
-            currentWave = waves.Count - 1;
+            stopEnemiesComing = true;
+            isBossHere = true;
+        }else {
+            waveCounter = waves[levelWaveGroup].waves[currentWave].waveLength;
+            spawnCounter = waves[levelWaveGroup].waves[currentWave].timeBetweenSpawns;
         }
-        
-        waveCounter = waves[currentWave].waveLength;
-        spawnCounter = waves[currentWave].timeBetweenSpawns;
     }
 }
 
@@ -208,64 +218,3 @@ public class WaveInfo
 
 
 
-
-
-
-
-
-
-
-
-
-    // if(PlayerHealthController.instance.gameObject.activeSelf)
-        // {
-        //     if(currentWave < waves.Count)
-        //     {
-        //         waveCounter -= Time.deltaTime;
-        //         if(waveCounter <= 0)
-        //         {
-        //             GoToNextWave();
-        //         }
-                
-        //         spawnCounter -= Time.deltaTime;
-        //         if(spawnCounter <= 0)
-        //         {
-        //             spawnCounter = waves[currentWave].timeBetweenSpawns;
-                    
-        //             GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SelectSpawnPoint(), Quaternion.identity);
-                    
-        //             spawnedEnemies.Add(newEnemy);
-        //         }
-        //     }
-        // }
-
-
-
-// Cette classe servira de modèle pour toutes les armes du jeu
-// public class Weapon : MonoBehaviour
-// {
-//     public List<WeaponStats> stats; // stocker les données de chaque niveau d'arme
-//     public int weaponLevel;
-// }
-
-// [System.Serializable]
-// public class WeaponStats
-// {
-//     public float speed, damage, range, timeBetweenAttacks, amount, duration;
-// }
-
-// Toutes les armes partagent des fonctionnalités communes (statistiques, niveaux) sans avoir à réécrire ce code pour chaque arme
-
-
-// public void SetStats()
-// {
-//     damager.damageAmount = stats[weaponLevel].damage;  // 
-    
-//     transform.localScale = Vector3.one * stats[weaponLevel].range;
-    
-//     timeBetweenSpawn = stats[weaponLevel].timeBetweenAttacks;
-    
-//     damager.lifetime = stats[weaponLevel].duration;
-    
-//     spawnCounter = 0f;
-// }

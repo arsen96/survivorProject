@@ -3,7 +3,11 @@ using UnityEngine;
 public class CollectablesController : MonoBehaviour
 {
     public float xp = 2f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+
     void Start()
     {
         
@@ -20,7 +24,10 @@ public class CollectablesController : MonoBehaviour
         if (collider.tag == "Player")
         {
             collider.GetComponentInParent<PlayerXpController>().currentXp += xp;
-            Destroy(gameObject);
+            if (gameObject != null)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 5944852847159297222}
   - component: {fileID: 7704662550660794253}
   - component: {fileID: 9057400084735605585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -191,6 +191,13 @@ MonoBehaviour:
   moveSpeed: 1
   damage: 5
   hitCooldown: 1
+  pushDuration: 0.5
+  pushCounter: 0
+  enablePushback: 1
+  levelDamageMultiplier: 2
+  levelMoveSpeedMultiplier: 1.5
+  _levelDamageMultiplier: 1
+  _levelMoveSpeedMultiplier: 1
 --- !u!114 &7704662550660794253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +213,7 @@ MonoBehaviour:
   sprite: {fileID: 8194454003871704341}
   speed: 0.5
   minSize: 0.9
-  maxSize: 1.1
+  maxSize: 3
 --- !u!114 &9057400084735605585
 MonoBehaviour:
   m_ObjectHideFlags: 0
