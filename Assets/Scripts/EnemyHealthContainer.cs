@@ -40,12 +40,19 @@ public class EnemyHealthContainer : MonoBehaviour
 
         if(currentHealth <= 0)
         {
+            if (gameObject.GetComponent<BossController>() != null)
+
+            {
+                gameObject.GetComponent<BossController>().Victory();
+            }
             currentPos = gameObject.transform.position;
             Transform parent = transform.parent;
             Destroy(gameObject);
 
             GameObject instance = Instantiate(crystal, currentPos, Quaternion.identity, parent.GetChild(0).transform);
-        }else{
+        }
+        else
+        {
              if (!healthSlider.gameObject.activeSelf)
              {
                  healthSlider.gameObject.SetActive(true);

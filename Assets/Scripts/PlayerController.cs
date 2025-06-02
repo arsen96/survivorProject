@@ -31,14 +31,11 @@ public class PlayerController : MonoBehaviour
 
         transform.position += moveInput * moveSpeed * Time.deltaTime;
 
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-            if (!HasChildWithName(myPrefab.name))
-            {
-                GameObject instance = Instantiate(myPrefab, transform.position, Quaternion.identity, transform);
-                instance.name = myPrefab.name;
-            }
-        //}
+        if (!HasChildWithName(myPrefab.name))
+        {
+            GameObject instance = Instantiate(myPrefab, transform.position, Quaternion.identity, transform);
+            instance.name = myPrefab.name;
+        }
     }
 
     bool HasChildWithName(string name)

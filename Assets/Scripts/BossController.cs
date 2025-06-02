@@ -37,5 +37,13 @@ public class BossController : MonoBehaviour
             _launchCooldown = launchCooldown;
         }
     }
+
+    public void Victory()
+    {
+        GameObject gameMaster = GameObject.FindGameObjectWithTag("GameController");
+        Debug.Log("Dans le Victory" + gameMaster);
+        gameMaster.GetComponent<GameMaster>().Finish("Gagné !");
+    }
         
 }
+

@@ -74,20 +74,13 @@ public class SpawnController : MonoBehaviour
     //   DestroyEnemies();
     }
 
-    public void DestroyEnemies(bool checkDistance = true){
-
+    public void DestroyEnemies()
+    {
         for (var i = spawnedEnemies.Count - 1; i >= 0; i--)
         {
 
-            if(checkDistance){
-                if (Vector3.Distance(transform.position, spawnedEnemies[i].transform.position) > despawnDistance){
-                        Destroy(spawnedEnemies[i]);
-                        spawnedEnemies.RemoveAt(i);
-               }
-            }else{
-                Destroy(spawnedEnemies[i]);
-                spawnedEnemies.RemoveAt(i);
-            }
+            Destroy(spawnedEnemies[i]);
+            spawnedEnemies.RemoveAt(i);
            
         }
     }

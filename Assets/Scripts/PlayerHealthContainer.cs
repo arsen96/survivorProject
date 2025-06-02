@@ -8,7 +8,6 @@ public class PlayerHealthController : MonoBehaviour
     public Slider healthSlider;
 
     private float currentHealth, maxHealth;
-    private bool damaged = false;
 
     private void Awake()
     {
@@ -23,7 +22,6 @@ public class PlayerHealthController : MonoBehaviour
         {
             maxHealth = Player.maxHealth;
             currentHealth = Player.currentHealth;
-            Debug.Log("currentHealth" + currentHealth);
         };
 
         if (healthSlider != null) {
@@ -43,7 +41,6 @@ public class PlayerHealthController : MonoBehaviour
         currentHealth -= damageToTake;
         if (currentHealth <= 0)
         {
-            Debug.Log("Mort " + currentHealth);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
