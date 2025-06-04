@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class EnemyHealthContainer : MonoBehaviour
 {
+    public static event System.Action OnBossDeath;
     public static EnemyHealthContainer instance;
     public GameObject crystal;
     
@@ -11,8 +12,8 @@ public class EnemyHealthContainer : MonoBehaviour
 
     private Vector3 currentPos;
     private EnemyController enemyController;
-
     
+    // private List<GameObject> collectables = new List<GameObject>();
 
     private void Awake()
     {
@@ -42,14 +43,23 @@ public class EnemyHealthContainer : MonoBehaviour
     public void TakeDamage(float damageToTake)
     {
         currentHealth -= damageToTake;
-
+        // Debug.Log("damageToTake: " + damageToTake);
         if(currentHealth <= 0)
         {
             currentPos = gameObject.transform.position;
+
+            if(gameObject.GetComponent<BossWrapper>() != null){
+                // OnBossDeath?.Invoke();
+                // DestroyAllCrystals();
+                // Debug.Log("BossController");    
+                gameObject.GetComponent<BossWrapper>().Victory();
+         
+            }
+
             Transform parent = transform.parent;
             Destroy(gameObject);
-
             GameObject instance = Instantiate(crystal, currentPos, Quaternion.identity, parent.GetChild(0).transform);
+            // collectables.Add(instance);
         }else{
              if (!healthSlider.gameObject.activeSelf)
              {
@@ -62,6 +72,16 @@ public class EnemyHealthContainer : MonoBehaviour
         DamageServiceController.instance.MakeDamage(damageToTake, transform.position);
     }
 
+    private void DestroyAllCrystals()
+    {
+        foreach (Transform child in transform.parent.GetChild(0))
+        {
+            if (child.gameObject.CompareTag("xp"))
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
 
     public void TakeDamage(float damageToTake, bool shouldKnockback)
     {

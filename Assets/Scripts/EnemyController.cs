@@ -14,11 +14,20 @@ public class EnemyController : MonoBehaviour
     public float pushCounter;
     [SerializeField] public bool enablePushback = true;
 
+    public float levelDamageMultiplier;
+    public float levelMoveSpeedMultiplier;
 
+
+    [HideInInspector]
+    public float _levelDamageMultiplier = 1f;
+    [HideInInspector]
+    public float _levelMoveSpeedMultiplier = 1f;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+
         // target = FindObjectOfType<PlayerController>().transform;
 
         target = PlayerHealthController.instance.transform;
@@ -42,7 +51,8 @@ public class EnemyController : MonoBehaviour
                 }
             }
 
-        theRB.linearVelocity = (target.position - transform.position).normalized * moveSpeed;
+
+        theRB.linearVelocity = (target.position - transform.position).normalized * (moveSpeed * _levelMoveSpeedMultiplier);
 
         if (target.position.x < transform.position.x)
         {
@@ -62,12 +72,11 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if collision is with player and hit cooldown is over
-        if(collision.gameObject.tag == "Player" && hitCounter <= 0)
+        if(collision.gameObject.tag == "MainPlayer" && hitCounter <= 0)
         {
-            // Apply damage to player
             PlayerHealthController.instance.TakeDamage(damage);
             hitCounter = hitCooldown;
         }
     }
+   
 }

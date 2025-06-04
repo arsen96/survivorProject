@@ -3,7 +3,10 @@ using UnityEngine;
 public class CollectablesController : MonoBehaviour
 {
     public float xp = 2f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
     void Start()
     {
         
@@ -17,10 +20,14 @@ public class CollectablesController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Player")
+        if (collider.tag == "MainPlayer")
         {
-            collider.GetComponentInParent<PlayerXpController>().currentXp += xp;
-            Destroy(gameObject);
+
+            collider.GetComponentInParent<PlayerXpController>().currentXp += xp;    
+            if (gameObject != null)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

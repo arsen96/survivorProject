@@ -44,5 +44,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb10c00abda04ed46a32f20f71834510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+  - speed: 2
+    damage: 30
+    range: 0
+    timeBetweenAttacks: 0
+    duration: 0
+  - speed: 5
+    damage: 10
+    range: 0
+    timeBetweenAttacks: 0
+    duration: 0
+  - speed: 7
+    damage: 15
+    range: 0
+    timeBetweenAttacks: 0
+    duration: 0
+  weaponLevel: 0
   rotationSpeed: 100
   sword: {fileID: 4496929047224380815, guid: 7292aebcf87d5b249974023d96804aff, type: 3}
+  atkDamage: 0
+  secondParent: {fileID: 0}
+  spawnCounter: 0
