@@ -19,7 +19,7 @@ public class CollectablesController : MonoBehaviour
     {
         if (collider.tag == "Player")
         {
-            collider.GetComponentInParent<PlayerXpController>().currentXp += xp;
+            collider.GetComponent<PlayerXpController>().currentXp += xp;
             Destroy(gameObject);
         }
     }

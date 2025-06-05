@@ -14,11 +14,12 @@ public class PlayerController : MonoBehaviour
 
     public Joystick joystick;
 
-    public GameObject myPrefab;
+    public GameObject swordPrefab;
+    private Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -29,12 +30,12 @@ public class PlayerController : MonoBehaviour
         // Tu peux ajouter un Normalize() si tu veux une vitesse constante
         moveInput = Vector3.ClampMagnitude(moveInput, 1f);
 
-        transform.position += moveInput * moveSpeed * Time.deltaTime;
+        rb.linearVelocity = moveInput * moveSpeed;
 
-        if (!HasChildWithName(myPrefab.name))
+        if (!HasChildWithName(swordPrefab.name))
         {
-            GameObject instance = Instantiate(myPrefab, transform.position, Quaternion.identity, transform);
-            instance.name = myPrefab.name;
+            GameObject instance = Instantiate(swordPrefab, transform.position, Quaternion.identity, transform);
+            instance.name = swordPrefab.name;
         }
     }
 
