@@ -75,6 +75,7 @@ public class SpawnController : MonoBehaviour
 
     void Start()
     {
+
         EnemyHealthContainer.OnBossDeath += HandleBossDeath;
         timeToSpawn = spawnCounter;
         _bossAppearTime = bossAppearTime;
@@ -85,17 +86,13 @@ public class SpawnController : MonoBehaviour
         if (PlayerPrefs.HasKey("levelIndex"))
         {
             int levelIndex = PlayerPrefs.GetInt("levelIndex");
-            if(!PlayerPrefs.HasKey("highestLevelDone")){
-                PlayerPrefs.SetInt("highestLevelDone", levelIndex);
-            }else{
-                int highestLevelDone = PlayerPrefs.GetInt("highestLevelDone");
-                if(levelIndex > highestLevelDone){
-                    PlayerPrefs.SetInt("highestLevelDone", levelIndex);
-                }
-            }
             LoadLevel(levelIndex);
         }
+
+        
         initLevel();
+        PlayerPrefs.DeleteKey("perdu");
+        PlayerPrefs.Save();
     }
 
     void OnDestroy()
@@ -303,8 +300,8 @@ public class SpawnController : MonoBehaviour
         //     newLevel?.Invoke(levelWaveGroup);
         //     shouldAdvanceToNextLevel = false;
         // }
-        GameObject endGame = GameObject.Find("endGame");
-        endGame.SetActive(false);
+        // GameObject endGame = GameObject.Find("endGame");
+        // endGame.SetActive(false);
         initLevel();
     }
 

@@ -165374,7 +165374,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361319019}
   m_LocalRotation: {x: 0.04559082, y: -0, z: -0, w: 0.9989602}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0000000054050133}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165383,7 +165383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 5.226, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.04, y: 0.96}
+  m_AnchoredPosition: {x: -0.01, y: 0.98}
   m_SizeDelta: {x: 1920, y: 1078.4172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &361319021
@@ -166483,73 +166483,73 @@ MonoBehaviour:
   waves:
   - waves:
     - enemyToSpawn: {fileID: 8105614089904239623, guid: c1007a6db4e6effe89e07415d822fe02, type: 3}
-      waveLength: 10
+      waveLength: 5
       timeBetweenSpawns: 0.05
     - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 10
-      timeBetweenSpawns: 0.2
-    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
+      waveLength: 5
+      timeBetweenSpawns: 0.1
+    - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
       waveLength: 1
       timeBetweenSpawns: 0.8
   - waves:
     - enemyToSpawn: {fileID: 6657714680216451324, guid: 51a712848c753d53782223f2627217bd, type: 3}
-      waveLength: 15
-      timeBetweenSpawns: 0.05
+      waveLength: 8
+      timeBetweenSpawns: 0.4
     - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
-      waveLength: 15
+      waveLength: 8
+      timeBetweenSpawns: 0.8
+    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
+      waveLength: 1
+      timeBetweenSpawns: 0.8
+  - waves:
+    - enemyToSpawn: {fileID: 8985815523219757772, guid: 8ce15d50dde738ffd98a4f7620fdd69f, type: 3}
+      waveLength: 20
+      timeBetweenSpawns: 0.12
+    - enemyToSpawn: {fileID: 473601321694252317, guid: 015663a2950b1007d8fabca04a183b01, type: 3}
+      waveLength: 20
+      timeBetweenSpawns: 0.08
+    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
+      waveLength: 1
+      timeBetweenSpawns: 0.8
+  - waves:
+    - enemyToSpawn: {fileID: 2626734412409704674, guid: 2396d23d0cbec884dae59c15a40ccf79, type: 3}
+      waveLength: 30
+      timeBetweenSpawns: 0.03
+    - enemyToSpawn: {fileID: 7214068341817739301, guid: a836cfae5665ea7008e2b21ddd60cc1b, type: 3}
+      waveLength: 30
       timeBetweenSpawns: 0.8
     - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
       waveLength: 1
       timeBetweenSpawns: 0.8
   - waves:
-    - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.03
-    - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.8
-    - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
-      waveLength: 2
-      timeBetweenSpawns: 0.8
-  - waves:
-    - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.03
-    - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.8
-    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
-      waveLength: 2
-      timeBetweenSpawns: 0.8
-  - waves:
-    - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
+    - enemyToSpawn: {fileID: 236839782764816243, guid: 06e0cdfbed0c4ba5091c978f10ccf0aa, type: 3}
       waveLength: 30
       timeBetweenSpawns: 0.01
-    - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 20
+    - enemyToSpawn: {fileID: 8366361861834625147, guid: 961551555811d121ab4788d9970de772, type: 3}
+      waveLength: 70
       timeBetweenSpawns: 0.8
-    - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
-      waveLength: 3
-      timeBetweenSpawns: 0.8
+    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
+      waveLength: 1
+      timeBetweenSpawns: 0.9
+  - waves:
+    - enemyToSpawn: {fileID: 8897201817691176236, guid: fae4755a303a21d008fea93ff9e30df5, type: 3}
+      waveLength: 60
+      timeBetweenSpawns: 0.08
+    - enemyToSpawn: {fileID: 3755157053364878501, guid: 6fa1687075e2f9828b675e9c86ab029e, type: 3}
+      waveLength: 40
+      timeBetweenSpawns: 0.05
+    - enemyToSpawn: {fileID: 3203566229167839179, guid: 25bb5a754e1169b3a80122a11facbca1, type: 3}
+      waveLength: 1
+      timeBetweenSpawns: 0.9
   - waves:
     - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.03
+      waveLength: 60
+      timeBetweenSpawns: 0.8
     - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.8
+      waveLength: 60
+      timeBetweenSpawns: 1.5
     - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
-      waveLength: 2
-      timeBetweenSpawns: 0.8
-  - waves:
-    - enemyToSpawn: {fileID: 2847554019211400411, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.03
-    - enemyToSpawn: {fileID: 3002549647495913716, guid: 55a20ac25b1fc39aba27edfe711342f7, type: 3}
-      waveLength: 20
-      timeBetweenSpawns: 0.8
-    - enemyToSpawn: {fileID: 7979462981319548056, guid: 9594439e6a964735782b5e49da5828e7, type: 3}
-      waveLength: 2
+      waveLength: 1
       timeBetweenSpawns: 0.8
   nombreDeGroupes: 0
   playerController: {fileID: 0}
@@ -250535,32 +250535,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - speed: 7
-    damage: 7
+    damage: 9
     range: 1
     timeBetweenAttacks: 1
     duration: 1
-    amount: 1
+    amount: 2
     upgradeText: Niveau 1
   - speed: 8
-    damage: 10
+    damage: 11
     range: 1.1
     timeBetweenAttacks: 0.8
     duration: 0.8
-    amount: 2
+    amount: 3
     upgradeText: Niveau 2
   - speed: 12
     damage: 13
     range: 1.3
     timeBetweenAttacks: 0.5
     duration: 0.5
-    amount: 2
+    amount: 3
     upgradeText: Niveau 3
   - speed: 12
     damage: 14
     range: 1.4
     timeBetweenAttacks: 0.5
     duration: 0.5
-    amount: 2
+    amount: 3
     upgradeText: Niveau 4
   - speed: 12
     damage: 16
@@ -251703,56 +251703,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - speed: 0.5
-    damage: 10
+    damage: 5
     range: 1
     timeBetweenAttacks: 7
-    duration: 3
+    duration: 2
     amount: 0
     upgradeText: Niveau 1
   - speed: 0.5
-    damage: 12
+    damage: 6
     range: 1
-    timeBetweenAttacks: 15
-    duration: 10
+    timeBetweenAttacks: 8
+    duration: 3
     amount: 0
     upgradeText: Niveau 2
   - speed: 0.5
-    damage: 14
+    damage: 7
     range: 1.3
     timeBetweenAttacks: 9
-    duration: 5
+    duration: 4
     amount: 0
     upgradeText: Niveau 3
   - speed: 0.5
-    damage: 16
+    damage: 7
     range: 1.3
     timeBetweenAttacks: 10
-    duration: 8
+    duration: 6
     amount: 0
     upgradeText: Niveau 4
   - speed: 0.5
-    damage: 16
+    damage: 8
     range: 1.3
     timeBetweenAttacks: 10
-    duration: 8
+    duration: 7
     amount: 0
     upgradeText: Niveau 5
   - speed: 0.5
-    damage: 18
+    damage: 10
     range: 1.3
     timeBetweenAttacks: 10
     duration: 8
     amount: 0
     upgradeText: Niveau 6
   - speed: 0.5
-    damage: 20
+    damage: 12
     range: 1.3
     timeBetweenAttacks: 10
     duration: 8
     amount: 0
     upgradeText: Niveau 7
   - speed: 0.5
-    damage: 23
+    damage: 14
     range: 1.3
     timeBetweenAttacks: 10
     duration: 8
@@ -252524,8 +252524,8 @@ MonoBehaviour:
   joystick: {fileID: 1789954594}
   myPrefab: {fileID: 359980594172869069, guid: 5f64953fbfa687e4fa6705c60d062273, type: 3}
   unassignedWeapons:
-  - {fileID: 1967377217}
   - {fileID: 1591476097}
+  - {fileID: 1967377217}
   - {fileID: 1291062786}
   assignedWeapons: []
   maxWeapons: 3
@@ -252574,6 +252574,7 @@ MonoBehaviour:
   bloodColor: {r: 1, g: 0, b: 0, a: 1}
   currentHealth: 0
   maxHealth: 0
+  Player: {fileID: 0}
 --- !u!114 &1849899277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252797,25 +252798,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - speed: 0.5
-    damage: 5
+    damage: 12
     range: 1
     timeBetweenAttacks: 7
     duration: 5
     amount: 1
     upgradeText: Niveau 1
   - speed: 1
-    damage: 7
+    damage: 8
     range: 1.1
     timeBetweenAttacks: 9
     duration: 7
     amount: 2
     upgradeText: Niveau 2
   - speed: 360
-    damage: 9
+    damage: 8
     range: 1.3
     timeBetweenAttacks: 10
     duration: 7
-    amount: 3
+    amount: 2
     upgradeText: Niveau 3
   - speed: 360
     damage: 11

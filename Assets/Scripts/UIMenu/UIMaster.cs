@@ -65,23 +65,29 @@ public class UIMaster : UILevelBtnModel
             }
             catch (System.Exception e)
             {
-                Debug.LogError("Erreur lors de la désérialisation des données de niveaux: " + e.Message);
-                // Réinitialiser en cas d'erreur
                 levelsDone = 0;
                 lengthTotal = 0;
             }
         }
 
-        if (PlayerPrefs.GetInt("perdu", 0) == 1)
+
+        Debug.Log("levelsDone avant: " + levelsDone);
+        if (PlayerPrefs.HasKey("perdu") && PlayerPrefs.GetInt("perdu") == 1)
         {
-            levelsDone = Mathf.Max(0, levelsDone - 1);
-            PlayerPrefs.DeleteKey("perdu");
-            PlayerPrefs.Save(); // Sauvegarder immédiatement après suppression
+            levelsDone = levelsDone - 1;
+            // PlayerPrefs.DeleteKey("perdu");
+            PlayerPrefs.Save(); 
+            Debug.Log("levelsDone pendant: " + levelsDone);
         }
+        Debug.Log("levelsDone apres: " + levelsDone);
 
         List<UILevelBtnModel> buttons = new List<UILevelBtnModel>();
         int highestLevelDone = PlayerPrefs.GetInt("highestLevelDone");
-        Debug.Log("highestLevelDone after : " + highestLevelDone);
+
+        // if(levelsDone > highestLevelDone){
+        //     highestLevelDone = levelsDone;
+        // }
+        Debug.Log("highestLevelDone: " + highestLevelDone);
         for (int i = 0; i <= lengthTotal; i++)
         {
             if(highestLevelDone > 0){

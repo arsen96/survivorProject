@@ -47,11 +47,6 @@ public class GameMaster : UILevelBtnModel
     {
         // Changer le label du popup
         gameMasterCanvasScript.title.text = label;
-
-        if(label.StartsWith("Perdu")){
-            PlayerPrefs.SetInt("perdu", 1);
-        }
-
         // Créer les boutons
         List<UILevelBtnModel> buttons = new List<UILevelBtnModel>();
         buttons.Add(new UILevelBtnModel { btn="buttonRetry",isDone=true,chooseLevel=false, isAccessible = false});

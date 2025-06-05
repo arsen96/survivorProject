@@ -23,6 +23,7 @@ public class PlayerHealthController : MonoBehaviour
     private bool gameOver = false;
     private Coroutine damageEffectCoroutine;
     private Camera playerCamera;
+    public PlayerController Player;
 
     private void Awake()
     {
@@ -67,7 +68,11 @@ public class PlayerHealthController : MonoBehaviour
                 healthSlider.value = 0;
                 GameObject gameMaster = GameObject.FindGameObjectWithTag("GameController");
                 gameMaster.GetComponent<GameMaster>().Finish("Perdu !");
-                endGame.gameObject.SetActive(true);
+                PlayerPrefs.SetInt("perdu", 1);
+                PlayerPrefs.Save();
+                gameOver = true;
+
+                // endGame.gameObject.SetActive(true);
             }
         }
         else
@@ -84,58 +89,6 @@ public class PlayerHealthController : MonoBehaviour
         }
         UpdateHealthImpact();
     }
-
-    // void StartDamageEffect()
-    // {
-    //     if (damageEffectCoroutine != null)
-    //         StopCoroutine(damageEffectCoroutine);
-        
-    //     damageEffectCoroutine = StartCoroutine(DamageEffectCoroutine());
-        
-    //     if (useScreenShake)
-    //         StartCoroutine(ScreenShake());
-    // }
-
-    // IEnumerator DamageEffectCoroutine()
-    // {
-    //     // Flash rouge intense au moment du dégât
-    //     Color originalColor = healthImpact.color;
-    //     Color flashColor = bloodColor;
-    //     flashColor.a = 0.8f;
-        
-    //     healthImpact.color = flashColor;
-    //     yield return new WaitForSeconds(0.1f);
-        
-    //     // Transition vers la couleur normale
-    //     float elapsedTime = 0f;
-    //     while (elapsedTime < flashDuration)
-    //     {
-    //         elapsedTime += Time.deltaTime;
-    //         float t = elapsedTime / flashDuration;
-    //         healthImpact.color = Color.Lerp(flashColor, originalColor, t);
-    //         yield return null;
-    //     }
-    // }
-
-    // IEnumerator ScreenShake()
-    // {
-    //     Vector3 originalPosition = playerCamera.transform.position;
-    //     float shakeDuration = 0.2f;
-    //     float shakeIntensity = 0.1f;
-        
-    //     float elapsedTime = 0f;
-    //     while (elapsedTime < shakeDuration)
-    //     {
-    //         float x = Random.Range(-shakeIntensity, shakeIntensity);
-    //         float y = Random.Range(-shakeIntensity, shakeIntensity);
-            
-    //         playerCamera.transform.position = originalPosition + new Vector3(x, y, 0);
-    //         elapsedTime += Time.deltaTime;
-    //         yield return null;
-    //     }
-        
-    //     playerCamera.transform.position = originalPosition;
-    // }
 
     void UpdateHealthImpact()
     {

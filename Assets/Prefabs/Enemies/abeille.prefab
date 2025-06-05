@@ -419,7 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystal: {fileID: 348869454282857346, guid: 67f5e927d264fa249bc5b40a5569528c, type: 3}
   currentHealth: 0
-  maxHealth: 10
+  maxHealth: 5
   healthSlider: {fileID: 6328453717814328473}
 --- !u!1 &8275911856838619449
 GameObject:

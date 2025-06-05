@@ -49,11 +49,21 @@ public class EnemyHealthContainer : MonoBehaviour
             currentPos = gameObject.transform.position;
 
             if(gameObject.GetComponent<BossWrapper>() != null){
-                // OnBossDeath?.Invoke();
-                // DestroyAllCrystals();
-                // Debug.Log("BossController");    
+                DestroyAllCrystals();
+               
+                int levelIndex = PlayerPrefs.GetInt("levelIndex");
+                if(!PlayerPrefs.HasKey("highestLevelDone")){
+                    PlayerPrefs.SetInt("highestLevelDone", 0);
+                    PlayerPrefs.Save();
+                }else{
+                    int highestLevelDone = PlayerPrefs.GetInt("highestLevelDone");
+                    if(PlayerPrefs.HasKey("levelIndex") && levelIndex > highestLevelDone){
+                        PlayerPrefs.SetInt("highestLevelDone", levelIndex);
+                        PlayerPrefs.Save();
+                    }
+                }
+
                 gameObject.GetComponent<BossWrapper>().Victory();
-         
             }
 
             Transform parent = transform.parent;

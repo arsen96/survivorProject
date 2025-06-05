@@ -22,10 +22,8 @@ public class SpinBossController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("SpinBossController OnTriggerEnter2D " + other.gameObject.tag);
         if (other.gameObject.tag == "MainPlayer")
         {
-            // Debug.Log("axpeeerr");
             PlayerHealthController playerHealth = other.GetComponentInParent<PlayerHealthController>();
             if (playerHealth != null)
             {

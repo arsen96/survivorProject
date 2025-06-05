@@ -312,14 +312,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 4957285589425416780}
-  moveSpeed: 0.4
+  moveSpeed: 0.7
   damage: 7
   hitCooldown: 1
   pushDuration: 0.5
   pushCounter: 0
   enablePushback: 1
   levelDamageMultiplier: 2
-  levelMoveSpeedMultiplier: 1.5
+  levelMoveSpeedMultiplier: 1.08
   _levelDamageMultiplier: 1
   _levelMoveSpeedMultiplier: 1
 --- !u!114 &5814062181205481046
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystal: {fileID: 348869454282857346, guid: 67f5e927d264fa249bc5b40a5569528c, type: 3}
   currentHealth: 0
-  maxHealth: 10
+  maxHealth: 15
   healthSlider: {fileID: 12184214768376901}
 --- !u!1 &3241170115100443829
 GameObject:
