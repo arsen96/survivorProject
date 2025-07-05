@@ -17,36 +17,12 @@ public class SpinController : Weapon
 
     private int lastLevel;
 
-    // public delegate void BossDeathHandler();
-
-    // private void HandleBossDeath()
-    // {
-    //     ResetWeapon();
-    //     // rotateSpeed = defaultSpeed;
-    //     // ResetWeapon
-    //     // ResetNumberSwords();
-    // }
-
-    // private void OnEnable()
-    // {
-    //     EnemyHealthContainer.OnBossDeath += HandleBossDeath;
-    // }
-
-    private void OnDisable()
-    {
-        // EnemyHealthContainer.OnBossDeath -= HandleBossDeath;
-    }
 
     void Start()
     {
        SetStats(); 
        defaultSpeed = rotateSpeed;
         PlayerController parentPlayer = transform.parent.GetComponent<PlayerController>();
-            if (parentPlayer != null)
-            {
-                // atkDamage = parentPlayer.atkDamage;
-            }
-
             Transform grandparentTransform = transform.parent?.parent;
             if (grandparentTransform != null)
             {
@@ -79,7 +55,7 @@ public class SpinController : Weapon
     {
         
         if(holder != null){
-                    // transform.Rotate(0,0,rotateSpeed *  Time.deltaTime) ; 
+            // transform.Rotate(0,0,rotateSpeed *  Time.deltaTime); 
             holder.rotation = Quaternion.Euler(0f, 0f, holder.rotation.eulerAngles.z + (360 * Time.deltaTime * rotateSpeed));
             spawnCounter -= Time.deltaTime;
             if(spawnCounter <= 0){
@@ -100,35 +76,26 @@ public class SpinController : Weapon
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
-       if (other.gameObject.tag == "Enemy")
-        {
-            EnemyController enemyController = other.GetComponent<EnemyController>();
-            if (enemyController != null)
-            {
-                RotatingAttackController parent = GetComponentInParent<RotatingAttackController>();
-                if(parent != null){
-                    bool enablePushback = enemyController.enablePushback;
-                    float damage = 0;
-                    int statsIndex = Mathf.Min(parent.secondParent.level - 1, parent.stats.Count - 1);
-                    damage = parent.stats[statsIndex].damage;
-                    other.GetComponent<EnemyHealthContainer>().TakeDamage(damage, enablePushback);
-                }
-            }
-        }else if(other.gameObject.tag == "Player"){
-            // boule de feu
-           PlayerHealthController.instance.TakeDamage(10);
-        }
-    }
-
-
-    // void ResetNumberSwords()
+    // private void OnTriggerEnter2D(Collider2D other)
     // {
-    //     foreach (Transform child in transform)
+    //    if (other.gameObject.tag == "Enemy")
     //     {
-    //         Destroy(child.gameObject);
+    //         EnemyController enemyController = other.GetComponent<EnemyController>();
+    //         if (enemyController != null)
+    //         {
+    //             RotatingAttackController parent = GetComponentInParent<RotatingAttackController>();
+    //             if(parent != null){
+    //                 bool enablePushback = enemyController.enablePushback;
+    //                 float damage = 0;
+    //                 int statsIndex = Mathf.Min(parent.secondParent.level - 1, parent.stats.Count - 1);
+    //                 damage = parent.stats[statsIndex].damage;
+    //                 other.GetComponent<EnemyHealthContainer>().TakeDamage(damage, enablePushback);
+    //             }
+    //         }
+    //     }else if(other.gameObject.tag == "Player"){
+    //         // boule de feu
+    //        PlayerHealthController.instance.TakeDamage(10);
     //     }
     // }
+
 }

@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class LevelUpSelectionButton : MonoBehaviour
 {
   public TMP_Text upgradeDescText, nameLevelText;
+   public string sceneName = "UIScene";
    public Image weaponIcon;
    private Weapon assignedWeapon;
    
@@ -20,9 +23,9 @@ public class LevelUpSelectionButton : MonoBehaviour
        upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
        weaponIcon.sprite = theWeapon.icon;
        
-       nameLevelText.text = theWeapon.name + " - Niveau " + theWeapon.weaponLevel;
+       nameLevelText.text = theWeapon.name;
     }else{
-        upgradeDescText.text = "Déverrouiller " + theWeapon.name;
+        upgradeDescText.text = "Deverrouiller";
         weaponIcon.sprite = theWeapon.icon;
         nameLevelText.text = theWeapon.name;
     }
@@ -43,6 +46,9 @@ public class LevelUpSelectionButton : MonoBehaviour
         Time.timeScale = 1f;
     }
    }
+
+
+
 }
 
 

@@ -14,9 +14,5 @@ public class BossWrapper : MonoBehaviour
         
     }
 
-    public void Victory()
-    {
-        GameObject gameMaster = GameObject.FindGameObjectWithTag("GameController");
-        gameMaster.GetComponent<GameMaster>().Finish("Mission accomplie !");
-    }
+ 
 }

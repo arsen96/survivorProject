@@ -48,7 +48,8 @@ public class EnemyHealthContainer : MonoBehaviour
         {
             currentPos = gameObject.transform.position;
 
-            if(gameObject.GetComponent<BossWrapper>() != null){
+            BossWrapper[] bossWrappers = FindObjectsOfType<BossWrapper>();
+            if(gameObject.GetComponent<BossWrapper>() != null && bossWrappers[bossWrappers.Length - 1]){
                 DestroyAllCrystals();
                
                 int levelIndex = PlayerPrefs.GetInt("levelIndex");
@@ -63,7 +64,10 @@ public class EnemyHealthContainer : MonoBehaviour
                     }
                 }
 
-                gameObject.GetComponent<BossWrapper>().Victory();
+                // gameObject.GetComponent<BossWrapper>().Victory();
+                UIController.instance.gameOverPanel.SetActive(true);
+                UIController.instance.UpdateText("Mission accomplie !");
+                Time.timeScale = 0;
             }
 
             Transform parent = transform.parent;
@@ -101,5 +105,20 @@ public class EnemyHealthContainer : MonoBehaviour
         {
             enemyController.pushCounter = enemyController.pushDuration;
         }
+    }
+
+    private void OnEnable()
+    {
+        PlayerHealthController.OnGameOver += HandleGameOver;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealthController.OnGameOver -= HandleGameOver;
+    }
+
+    private void HandleGameOver()
+    {
+        DestroyAllCrystals();
     }
 }

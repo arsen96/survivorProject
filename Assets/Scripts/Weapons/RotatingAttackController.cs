@@ -47,12 +47,6 @@ public class RotatingAttackController : Weapon
         if (transform.parent != null)
         {
             PlayerController parentPlayer = transform.parent.GetComponent<PlayerController>();
-            // PlayerController parentPlayer = PlayerController.instance;
-            if (parentPlayer != null)
-            {
-                // atkDamage = parentPlayer.atkDamage;
-            }
-
             Transform grandparentTransform = transform.parent?.parent;
             if (grandparentTransform != null)
             {

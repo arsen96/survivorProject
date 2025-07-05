@@ -71,23 +71,17 @@ public class UIMaster : UILevelBtnModel
         }
 
 
-        Debug.Log("levelsDone avant: " + levelsDone);
         if (PlayerPrefs.HasKey("perdu") && PlayerPrefs.GetInt("perdu") == 1)
         {
             levelsDone = levelsDone - 1;
             // PlayerPrefs.DeleteKey("perdu");
             PlayerPrefs.Save(); 
-            Debug.Log("levelsDone pendant: " + levelsDone);
         }
         Debug.Log("levelsDone apres: " + levelsDone);
 
         List<UILevelBtnModel> buttons = new List<UILevelBtnModel>();
         int highestLevelDone = PlayerPrefs.GetInt("highestLevelDone");
 
-        // if(levelsDone > highestLevelDone){
-        //     highestLevelDone = levelsDone;
-        // }
-        Debug.Log("highestLevelDone: " + highestLevelDone);
         for (int i = 0; i <= lengthTotal; i++)
         {
             if(highestLevelDone > 0){
@@ -123,21 +117,7 @@ public class UIMaster : UILevelBtnModel
                 int levelIndex = int.Parse(button.btn.Replace("buttonLevel ", ""));
                 label = "Niveau " + (levelIndex + 1);
                 action = () => SwitchToGame(levelIndex);
-            }
-            else if (button.btn == "buttonRetry")
-            {
-                label = "Rejouer";
-                action = () => GameMaster.RestartGame();
-            }
-            else if (button.btn == "buttonHome")
-            {
-                label = "Accueil";
-                action = () => MakeHome();
-                MakeHome();
-            }
 
-
-            if(button.chooseLevel){
                 if (label == "") continue;
 
                 Button btn = Instantiate(buttonPrefab, UIMasterCanvas).GetComponent<Button>();
@@ -154,8 +134,6 @@ public class UIMaster : UILevelBtnModel
                         btn.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 0.3f); // Gris pour niveau verrouillé
                         btn.interactable = false; // Désactiver les niveaux non accessibles
                     }
-                }else{
-                    btn.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 100);
                 }
                 ButtonPrefabController btnController = btn.GetComponent<ButtonPrefabController>();
 
@@ -166,13 +144,11 @@ public class UIMaster : UILevelBtnModel
 
                 // Action onClick du bouton (seulement si le bouton est interactable)
 
-                Debug.Log("btn.interactable: " + btn.interactable);
                 if (btn.interactable)
                 {
                     btn.onClick.AddListener(action);
                 }
 
-                // Mettre le bouton en enfant du buttonsContainer
                 btn.transform.SetParent(UIMasterCanvasScript.buttonsContainer.transform, false);
             }   
         }
@@ -187,45 +163,10 @@ public class UIMaster : UILevelBtnModel
     private void SaveLevelIndex(int levelIndex)
     {
         PlayerPrefs.SetInt("levelIndex", levelIndex);
-        PlayerPrefs.Save(); // Forcer la sauvegarde
-    }
-
-    public void MakeHome()
-    {
-        if (GameMaster?.spawnController != null)
-        {
-            int currentLevelIndex = GameMaster.spawnController.GetCurrentLevelWaveGroup();
-            int lengthTotal = GameMaster.spawnController.waves.Count;
-            
-            // Créer l'objet LevelsInfo correctement
-            LevelsInfo levelsInfo = new LevelsInfo
-            {
-                levelsDone = currentLevelIndex,
-                lengthTotal = lengthTotal - 1 // -1 car les index commencent à 0
-            };
-            
-            string jsonData = JsonUtility.ToJson(levelsInfo);
-            PlayerPrefs.SetString("levelsInfo", jsonData);
-            PlayerPrefs.Save(); // Forcer la sauvegarde
-            
-            Debug.Log("Sauvegarde des données de niveaux: " + jsonData);
-        }
-        else
-        {
-            Debug.LogError("GameMaster ou spawnController est null");
-        }
-        
-        GameMaster?.SwitchToHome();
-    }
-
-    // Méthode utilitaire pour réinitialiser la progression
-    public void ResetProgress()
-    {
-        PlayerPrefs.DeleteKey("levelsInfo");
-        PlayerPrefs.DeleteKey("levelIndex");
-        PlayerPrefs.DeleteKey("perdu");
         PlayerPrefs.Save();
-        Debug.Log("Progression réinitialisée");
     }
+
+   
+
 
 }

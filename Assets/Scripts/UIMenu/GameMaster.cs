@@ -19,6 +19,7 @@ public class GameMaster : UILevelBtnModel
     [HideInInspector]
     public SpawnController spawnController;
 
+
     void Start()
     {
         spawnController = GetComponent<SpawnController>();
@@ -35,54 +36,12 @@ public class GameMaster : UILevelBtnModel
     {
     
     }
+   
 
-    public void Finish(string label)
-    {
-        spawnController.DestroyEnemies();
-        Debug.Log("Dans le Finish " + label);
-        EnablePopupLastScreen(label);
-    }
-
-    private void EnablePopupLastScreen(string label)
-    {
-        // Changer le label du popup
-        gameMasterCanvasScript.title.text = label;
-        // Créer les boutons
-        List<UILevelBtnModel> buttons = new List<UILevelBtnModel>();
-        buttons.Add(new UILevelBtnModel { btn="buttonRetry",isDone=true,chooseLevel=false, isAccessible = false});
-        buttons.Add(new UILevelBtnModel { btn="buttonHome",isDone=true,chooseLevel=false, isAccessible = false});
-        UIMaster.CreateButtons(buttons);
-
-
-        // Désactivé le header
-        gameMasterCanvasScript.header.SetActive(false);
-
-        // Afficher le titre et le popup
-        gameMasterCanvasScript.title.enabled = true;
-        gameMasterCanvasScript.popup.SetActive(true);
-        Debug.Log("Dans le EnablePopupLastScreen " + label);
-    }
 
     public void SwitchToHome()
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-
-
-    public void RestartGame()
-    {   
-        if (spawnController != null)
-        {
-            // Faire progresser au niveau suivant si disponible
-            PlayerHealthController.instance.StartGame();
-            spawnController.RestartLevel();
-            // Cacher le menu
-            HidePopup();
-            
-            // Réactiver le header si nécessaire
-            gameMasterCanvasScript.header.SetActive(true);
-        }
     }
 
 

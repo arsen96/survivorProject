@@ -10,16 +10,6 @@ public class SwordController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // SetStats();
-        // if (transform.parent != null)
-        // {
-        //     RotatingAttackController grandparent = GetComponentInParent<RotatingAttackController>();
-        //     GetComponentInParent<RotatingAttackController>();
-        //     if (grandparent != null)
-        //     {
-        //         currentDamage = grandparent.atkDamage + swordDamage;
-        //     };
-        // }
 
     }
 
@@ -43,9 +33,6 @@ public class SwordController : MonoBehaviour
                 int statsIndex = Mathf.Min(grandparent.secondParent.level - 1, grandparent.stats.Count - 1);
                 damage = grandparent.stats[statsIndex].damage;
                 other.GetComponent<EnemyHealthContainer>().TakeDamage(damage, enablePushback);
-                // if(isBossController && other.gameObject.GetComponent<BossController>() == null){
-                //     Debug.Log("Killeddd");
-                // }
             }
         }
     }

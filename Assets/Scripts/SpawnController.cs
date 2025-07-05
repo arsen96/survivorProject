@@ -1,3 +1,5 @@
+
+// Start of Selection
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
@@ -5,14 +7,12 @@ using System.Collections;
 public class SpawnController : MonoBehaviour
 {
     public static event System.Action<int> newLevel;
-    public GameObject ennemyHealthContainer;
-    public GameObject enemyWrapperPrefab;
-
     public GameObject LimitYTop;
     public GameObject LimitYBottom;
     public GameObject LimitXLeft;
     public GameObject LimitXRight;
-    public GameObject bossWrapperPrefab;
+
+    [HideInInspector]
     public float spawnCounter;
     private float timeToSpawn;
 
@@ -20,15 +20,8 @@ public class SpawnController : MonoBehaviour
     public GameObject enemies;
 
     private Transform target;
-    private float despawnDistance;
-
-    public float durationToSpawn = 15f;
-    public float bossAppearTime = 3f;
-    private float _bossAppearTime;
-    private float _durationToSpawn;
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
-    private bool isDestroying = false;
     private bool stopEnemiesComing = false;
 
     [System.Serializable]
@@ -47,49 +40,28 @@ public class SpawnController : MonoBehaviour
     [HideInInspector]
     public int nombreDeGroupes = 0;
 
-    private bool isBossHere = false;
-    private GameObject currentBoss;
     public PlayerController playerController;
 
 
-    public delegate void BossDeathHandler();
-    public static event BossDeathHandler OnBossDefeated;
 
-    private void HandleBossDeath()
-    {
-        DestroyEnemies();
-        // Passer au groupe de vagues suivant
-        if (levelWaveGroup + 1 < waves.Count)
-        {
-            levelWaveGroup++;
-            Debug.Log("Nouveau niveau - levelWaveGroup: " + levelWaveGroup);
-            newLevel?.Invoke(levelWaveGroup);
-            initLevel();
-        }
-        else
-        {
-            Debug.Log("Tous les niveaux terminés !");
-            stopEnemiesComing = true;
-        }
-    }
+
 
     void Start()
     {
 
-        EnemyHealthContainer.OnBossDeath += HandleBossDeath;
         timeToSpawn = spawnCounter;
-        _bossAppearTime = bossAppearTime;
         target = PlayerHealthController.instance.transform;
-        despawnDistance = Vector3.Distance(transform.position, maxSpawn.position) + 2f;
-        _durationToSpawn = durationToSpawn;
 
         if (PlayerPrefs.HasKey("levelIndex"))
         {
             int levelIndex = PlayerPrefs.GetInt("levelIndex");
             LoadLevel(levelIndex);
+            if (PlayerPrefs.HasKey("restartingLevel"))
+            {
+                PlayerPrefs.DeleteKey("restartingLevel");
+            }
         }
 
-        
         initLevel();
         PlayerPrefs.DeleteKey("perdu");
         PlayerPrefs.Save();
@@ -97,7 +69,6 @@ public class SpawnController : MonoBehaviour
 
     void OnDestroy()
     {
-        EnemyHealthContainer.OnBossDeath -= HandleBossDeath;
     }
 
     void Update()
@@ -144,42 +115,12 @@ public class SpawnController : MonoBehaviour
             }
         }
         
-        if (newEnemy.GetComponent<BossFireController>() != null)
-        {
-            currentBoss = newEnemy;
-            isBossHere = true;
-        }
-        
         spawnedEnemies.Add(newEnemy);
     }
 
 
-
-        // // Adjust spawn point if it exceeds Y limits
-        // if (spawnPoint.y > LimitYTop.transform.position.y)
-        // {
-        //     spawnPoint.y = LimitYTop.transform.position.y;
-        // }
-        // else if (spawnPoint.y < LimitYBottom.transform.position.y)
-        // {
-        //     spawnPoint.y = LimitYBottom.transform.position.y;
-        // }
-
-
-    public List<int> getUntilDoneLevelIndex()
-    {
-        List<int> untilDoneLevelIndex = new List<int>();
-        for (int i = 0; i < levelWaveGroup; i++)
-        {
-            untilDoneLevelIndex.Add(i);
-        }
-
-        return untilDoneLevelIndex;
-    }
-
     public void initLevel()
     {
-        isBossHere = false;
         stopEnemiesComing = false;
         currentWave = 0; 
         if (waves[levelWaveGroup].waves.Length > 0)
@@ -243,7 +184,6 @@ public class SpawnController : MonoBehaviour
         }
 
 
-
        if (spawnPoint.x > LimitXRight.transform.position.x)
         {
             spawnPoint.x = LimitXRight.transform.position.x - 3f;
@@ -269,41 +209,23 @@ public class SpawnController : MonoBehaviour
             
             if (levelWaveGroup + 1 < waves.Count)
             {
-                // levelWaveGroup++;
-                // newLevel?.Invoke(levelWaveGroup);
-                // initLevel();
+                
             }
             else
             {
                 stopEnemiesComing = true;
-                isBossHere = true; // Peut-être spawner un boss final
             }
         }
         else
         {
             waveCounter = waves[levelWaveGroup].waves[currentWave].waveLength;
             spawnCounter = waves[levelWaveGroup].waves[currentWave].timeBetweenSpawns;
-            // Debug.Log($"Passage à la vague {currentWave} du groupe {levelWaveGroup}");
         }
     }
 
 
 
 
-     public void RestartLevel()
-    {
-        // if (shouldAdvanceToNextLevel)
-        // {
-        //     // Passer au niveau suivant
-        //     levelWaveGroup++;
-        //     Debug.Log("Passage au niveau suivant - levelWaveGroup: " + levelWaveGroup);
-        //     newLevel?.Invoke(levelWaveGroup);
-        //     shouldAdvanceToNextLevel = false;
-        // }
-        // GameObject endGame = GameObject.Find("endGame");
-        // endGame.SetActive(false);
-        initLevel();
-    }
 
     public int GetCurrentLevelWaveGroup()
     {
@@ -318,21 +240,21 @@ public class SpawnController : MonoBehaviour
     }
 
 
-       public void GoToNextLevel()
+    public void GoToNextLevel()
+    {
+        // Vérifier s'il y a un niveau suivant
+        if (levelWaveGroup + 1 < waves.Count)
         {
-            // Vérifier s'il y a un niveau suivant
-            if (levelWaveGroup + 1 < waves.Count)
-            {
-                levelWaveGroup++;
-              
-                newLevel?.Invoke(levelWaveGroup);
-                initLevel();
-            }
-            else
-            {
-                Debug.Log("Pas de niveau suivant disponible !");
-            }
+            levelWaveGroup++;
+          
+            newLevel?.Invoke(levelWaveGroup);
+            initLevel();
         }
+        else
+        {
+            Debug.Log("Pas de niveau suivant disponible !");
+        }
+    }
 }
 
 [System.Serializable]

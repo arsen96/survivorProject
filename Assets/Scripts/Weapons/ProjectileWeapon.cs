@@ -15,14 +15,12 @@ public class ProjectileWeapon : Weapon
 
     public static ProjectileWeapon instance;
     
-    // Start is called before the first frame update
     void Start()
     {
         SetStats();
         instance = this;
     }
     
-    // Update is called once per frame
     void Update()
     {
         if (statsUpdated == true)
@@ -46,7 +44,7 @@ public class ProjectileWeapon : Weapon
                     Vector3 direction = (targetPosition - transform.position).normalized; 
                     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                     angle -= 90;
-                    projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                    projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
                     Projectile newProjectile = Instantiate(projectile, transform.position, projectile.transform.rotation);
                     newProjectile.gameObject.SetActive(true);
                     newProjectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectile.moveSpeed;

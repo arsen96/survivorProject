@@ -23,13 +23,9 @@ public class EnemyController : MonoBehaviour
     [HideInInspector]
     public float _levelMoveSpeedMultiplier = 1f;
     
-
     // Start is called before the first frame update
     void Start()
     {
-
-        // target = FindObjectOfType<PlayerController>().transform;
-
         target = PlayerHealthController.instance.transform;
     }
 
@@ -52,8 +48,6 @@ public class EnemyController : MonoBehaviour
             }
 
 
-        theRB.linearVelocity = (target.position - transform.position).normalized * (moveSpeed * _levelMoveSpeedMultiplier);
-
         if (target.position.x < transform.position.x)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -67,6 +61,11 @@ public class EnemyController : MonoBehaviour
         {
             hitCounter -= Time.deltaTime;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        theRB.linearVelocity = (target.position - transform.position).normalized * (moveSpeed * _levelMoveSpeedMultiplier);
     }
 
 

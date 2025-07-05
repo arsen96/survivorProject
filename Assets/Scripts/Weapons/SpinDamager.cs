@@ -3,15 +3,18 @@ using System.Collections.Generic;
 public class SpinDamager : MonoBehaviour
 {
 
+    [HideInInspector]
     public float lifeTime;
 
     private float growSpeed = 1.5f;
     private Vector3 targetSize;
 
-    // [HideInInspector]
+    [HideInInspector]
     public float damageAmount;
 
     public bool damageOverTime;
+
+    [HideInInspector]
     public float timeBetweenDamage;
     private float damageCounter;
 
@@ -34,7 +37,7 @@ public class SpinDamager : MonoBehaviour
     void Update()
     {
         if(makeSlowBigger){
-                transform.localScale = Vector3.MoveTowards(transform.localScale, targetSize, growSpeed * Time.deltaTime);
+             transform.localScale = Vector3.MoveTowards(transform.localScale, targetSize, growSpeed * Time.deltaTime);
 
             lifeTime -= Time.deltaTime;
             if(lifeTime <= 0){
@@ -48,9 +51,6 @@ public class SpinDamager : MonoBehaviour
 
 
         if(damageOverTime == true){
-            // damageCounter -= Time.deltaTime;
-            // if(damageCounter <= 0){
-                damageCounter = timeBetweenDamage;
                 for(int i = 0; i < enemiesInRange.Count; i++){
                     if(enemiesInRange[i] != null){
                         
@@ -63,7 +63,6 @@ public class SpinDamager : MonoBehaviour
                         i--;
                     }
                 }
-            // }
         }
     }
 
@@ -82,8 +81,8 @@ public class SpinDamager : MonoBehaviour
                     if(grandparent != null){
                         bool enablePushback = enemyController.enablePushback;
                         float damage = 0;
-                        int statsIndex = Mathf.Min(grandparent.secondParent.level - 1, grandparent.stats.Count - 1);
-                        damage = grandparent.stats[statsIndex].damage;
+                        int weaponLevelIndex = Mathf.Min(grandparent.secondParent.level - 1, grandparent.stats.Count - 1);
+                        damage = grandparent.stats[weaponLevelIndex].damage;
                         other.GetComponent<EnemyHealthContainer>().TakeDamage(damage, enablePushback);
                     }
                 }
@@ -97,7 +96,6 @@ public class SpinDamager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-
         if(damageOverTime == true){
             if(other.gameObject.tag == "Enemy"){
                 enemiesInRange.Remove(other.GetComponent<EnemyController>());

@@ -39,7 +39,12 @@ public class Weapon : MonoBehaviour
 [System.Serializable]
 public class WeaponStats
 {
-    public float speed, damage, range, timeBetweenAttacks, duration,amount;
+    public float speed;              // Vitesse (rotation, projectile, etc.)
+    public float damage;             // Dégâts infligés
+    public float range;              // Portée de l'arme
+    public float timeBetweenAttacks; // Cadence de tir
+    public float amount;             // Nombre de projectiles
+    public float duration;           // Durée de vie des projectiles
     public string upgradeText;
-    // public float speed, damage, range, timeBetweenAttacks, amount, duration;
+    
 }

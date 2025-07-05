@@ -6,37 +6,33 @@ using System.Collections;
 public class PlayerHealthController : MonoBehaviour
 {
     public static PlayerHealthController instance;
+        
+    // Event declaration for game over
+    public static event System.Action OnGameOver;
+    
     public Slider healthSlider;
     public Image healthImpact;
-
-    public Image endGame;
 
     [Header("Effets Visuels")]
     public AnimationCurve damageCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public float pulseSpeed = 2f;
-    public float flashDuration = 0.3f;
     public Color bloodColor = Color.red;
     
     [HideInInspector]
     public float currentHealth, maxHealth;
-    private bool damaged = false;
     private bool gameOver = false;
-    private Coroutine damageEffectCoroutine;
-    private Camera playerCamera;
     public PlayerController Player;
 
     private void Awake()
     {
         instance = this;
-        playerCamera = Camera.main;
-        if (playerCamera == null)
-            playerCamera = FindObjectOfType<Camera>();
     }
 
     void Start()
     {
         StartGame();
     }
+
 
     public void StartGame()
     {
@@ -66,13 +62,15 @@ public class PlayerHealthController : MonoBehaviour
             {
                 currentHealth = 0;
                 healthSlider.value = 0;
-                GameObject gameMaster = GameObject.FindGameObjectWithTag("GameController");
-                gameMaster.GetComponent<GameMaster>().Finish("Perdu !");
+                
                 PlayerPrefs.SetInt("perdu", 1);
                 PlayerPrefs.Save();
+                UIController.instance.gameOverPanel.SetActive(true);
+                UIController.instance.UpdateText("Perdu !");
                 gameOver = true;
-
-                // endGame.gameObject.SetActive(true);
+                Time.timeScale = 0;
+                
+                OnGameOver?.Invoke();
             }
         }
         else
@@ -85,7 +83,6 @@ public class PlayerHealthController : MonoBehaviour
                 }
                 healthSlider.value = currentHealth;
             }
-            // StartDamageEffect();
         }
         UpdateHealthImpact();
     }
@@ -108,7 +105,6 @@ public class PlayerHealthController : MonoBehaviour
             imageColor = Color.Lerp(bloodColor, Color.black, 0.3f);
         }
     
-        
         imageColor.a = Mathf.Clamp01(transparency);
         healthImpact.color = imageColor;
     }

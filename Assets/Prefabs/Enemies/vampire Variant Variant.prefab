@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3743361583211584266, guid: 8ce15d50dde738ffd98a4f7620fdd69f, type: 3}
       propertyPath: levelMoveSpeedMultiplier
-      value: 1.08
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5442152050421876281, guid: 8ce15d50dde738ffd98a4f7620fdd69f, type: 3}
       propertyPath: m_Sprite

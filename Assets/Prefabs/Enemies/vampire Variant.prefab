@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7549048176864072989, guid: fe34e3b56fdc1b7639fca043dd3fb57e, type: 3}
       propertyPath: levelMoveSpeedMultiplier
-      value: 1.08
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
